@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PersonDB
+namespace Task1
 {
     class Program
     {

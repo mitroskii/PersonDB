@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace PersonDB.Model
+namespace Task1.Model
 {
     public partial class PersondbContext : DbContext
     {
