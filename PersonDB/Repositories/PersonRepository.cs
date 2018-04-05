@@ -9,42 +9,63 @@ namespace Task1.Repositories
 {
     class PersonRepository
     {
-        private static PersondbContext _context = new PersondbContext();
+        private readonly PersondbContext _context = new PersondbContext();
 
-        public static void Create(Person person)
+        public void Create(Person person)
         {
             _context.Person.Add(person);
             _context.SaveChanges();
         }
 
-        public static List<Person> Get()
+        public List<Person> Get()
         {
             List<Person> persons = _context.Person.ToListAsync().Result;
             return persons;
         }
 
-        public static Person GetPersonById(int id)
+        public Person GetPersonById(int id)
         {
-            var person = _context.Person.FirstOrDefault(p => p.ID == id);
-            return person;
+            var persons = _context.Person.FirstOrDefault(p => p.Id == id);
+            return persons;
         }
 
-        public static void Update(int id, Person person)
+        public void Update(int id, Person person)
         {
-            var updatePerson = GetPersonById(id);
-            if (updatePerson != null)
+            var UpdatePerson = GetPersonById(id);
+            if (UpdatePerson != null)
             {
-                _context.Person.Update(person);
+                UpdatePerson.Name = person.Name;
+                UpdatePerson.Age = person.Age;
+                _context.Person.Update(UpdatePerson);
             }
             _context.SaveChanges();
         }
 
-        public static void Delete(int id)
+        public void Delete(int id)
         {
             var delPerson = _context.Person.FirstOrDefault(p => p.Id == id);
             if (delPerson != null)
+            {
                 _context.Person.Remove(delPerson);
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }
+        }
+
+        public List<Person> GetPersonPhone()
+        {
+            List<Person> persons = _context.Person
+                .Include(p => p.Phone)
+                .ToListAsync().Result;
+            return persons;
+        }
+
+        public Person GetPersonByIdAndPhones(int id)
+        {
+            var person = _context.Person
+                .Include(p => p.Phone)
+                .Single(p => p.Id == id);
+
+            return person;
         }
     }
 }

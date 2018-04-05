@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Task1.Model
 {
@@ -22,7 +24,7 @@ namespace Task1.Model
             {
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.Phone)
-                    .HasForeignKey(d => d.PersonID)
+                    .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Phone_Person");
             });

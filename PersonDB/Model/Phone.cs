@@ -7,12 +7,22 @@ namespace Task1.Model
 {
     public partial class Phone
     {
-        public long ID { get; set; }
+        public Phone()
+        {
+        }
+
+        public Phone(string type, string number)
+        {
+            Type = type;
+            Number = number;
+        }
+
+        public long Id { get; set; }
         [Column(TypeName = "nchar(10)")]
         public string Type { get; set; }
         [Column(TypeName = "nchar(10)")]
         public string Number { get; set; }
-        public long? PersonID { get; set; }
+        public long? PersonId { get; set; }
 
         [ForeignKey("PersonId")]
         [InverseProperty("Phone")]
